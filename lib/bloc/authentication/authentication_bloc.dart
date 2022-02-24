@@ -9,9 +9,8 @@ class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   late UserRepository _userRepository;
 
-  AuthenticationBloc(UserRepository userRepository)
-      : super(UninitializedState()) {
-    _userRepository = userRepository;
+  AuthenticationBloc() : super(UninitializedState()) {
+    _userRepository = UserRepository();
 
     on<AuthLogoutEvent>((event, emit) async {
       _userRepository.signOut();
@@ -19,7 +18,7 @@ class AuthenticationBloc
     });
 
     on<AppStartedEvent>((event, emit) async {
-      emit(AuthLoadingState());
+      emit(UninitializedState());
       try {
         bool isSignedIn = await _userRepository.isSignedIn();
 
@@ -27,7 +26,7 @@ class AuthenticationBloc
           User? user = await _userRepository.getUser();
           user_model.User myUser = user_model.User(
               id: user!.uid,
-              displayName: user.displayName,
+              displayName: user.displayName ?? 'No name provided',
               email: user.email,
               phone: user.phoneNumber,
               imageUrl: user.photoURL);

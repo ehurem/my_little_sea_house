@@ -17,11 +17,6 @@ class UninitializedState extends AuthenticationState {
   List<Object> get props => [];
 }
 
-class AuthLoadingState extends AuthenticationState {
-  @override
-  List<Object> get props => [];
-}
-
 class AuthAuthenticatedState extends AuthenticationState {
   final User user;
 

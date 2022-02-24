@@ -11,7 +11,7 @@ class User {
   late String id;
 
   /// The current user's display name.
-  String? displayName;
+  late String displayName;
 
   /// The current user's phone number.
   String? phone;
@@ -23,7 +23,7 @@ class User {
   User({
     required this.id,
     this.email,
-    this.displayName,
+    required this.displayName,
     this.phone,
     this.imageUrl,
   });
