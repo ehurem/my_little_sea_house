@@ -16,18 +16,14 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     on<RegisterRequestEvent>((event, emit) async {
       emit(RegisterLoadingState());
       try {
-        final userCredential = await _userRepository.signUp(
+        final user = await _userRepository.signUp(
           email: event.email,
           password: event.password,
         );
 
-        if (userCredential.user == null) {
+        if (user == null) {
           emit(RegisterErrorState.error('Registration: User yielded is null.'));
         } else {
-          final User user = User(
-            displayName: userCredential.user!.displayName.toString(),
-            id: userCredential.user!.uid,
-          );
           emit(
             RegisterSuccessState(
               user,

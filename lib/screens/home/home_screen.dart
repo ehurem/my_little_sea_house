@@ -23,7 +23,6 @@ class HomeScreen extends StatelessWidget {
                             .read<AuthenticationBloc>()
                             .add(AuthLogoutEvent());
                       },
-                      splashRadius: 23,
                       icon: const Icon(
                         Icons.logout,
                       ),
@@ -36,7 +35,6 @@ class HomeScreen extends StatelessWidget {
                               builder: (context) => LoginScreen()),
                         );
                       },
-                      splashRadius: 23,
                       icon: const Icon(
                         Icons.login,
                       ),

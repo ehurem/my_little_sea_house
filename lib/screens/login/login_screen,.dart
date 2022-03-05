@@ -71,7 +71,6 @@ class LoginScreen extends StatelessWidget {
                         }
                       },
                       icon: const Icon(Icons.arrow_back),
-                      splashRadius: 23,
                     ),
                   ),
                   body: Builder(

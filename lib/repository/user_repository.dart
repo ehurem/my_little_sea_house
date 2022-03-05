@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:my_little_sea_house/models/user_model.dart' as user_model;
 
 class UserRepository {
   final FirebaseAuth _firebaseAuth;
@@ -6,32 +7,46 @@ class UserRepository {
   UserRepository({FirebaseAuth? firebaseAuth})
       : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
 
+  user_model.User? _userFromFirebaseUserCredential(
+      UserCredential userCredential) {
+    return userCredential.user != null
+        ? user_model.User(
+            id: userCredential.user!.uid,
+            displayName:
+                userCredential.user!.displayName ?? 'Display name is null.')
+        : null;
+  }
+
   // Sign in Anonimously
-  Future signInAnonimously() async {
+  Future<user_model.User?> signInAnonimously() async {
     try {
       UserCredential result = await _firebaseAuth.signInAnonymously();
-      User? user = result.user;
-      return user;
+      return _userFromFirebaseUserCredential(result);
     } catch (e) {
       print(e.toString());
       return null;
     }
   }
 
-  Future<UserCredential> signInWithCredentials(
-      {required String email, required String password}) {
-    return _firebaseAuth.signInWithEmailAndPassword(
+  Future<user_model.User?> signInWithCredentials(
+      {required String email, required String password}) async {
+    UserCredential userCredential =
+        await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
+    return _userFromFirebaseUserCredential(userCredential);
   }
 
-  Future<UserCredential> signUp(
+  Future<user_model.User?> signUp(
       {required String email, required String password}) async {
-    return await _firebaseAuth.createUserWithEmailAndPassword(
+    UserCredential userCredential =
+        await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
+
+    return _userFromFirebaseUserCredential(userCredential);
   }
 
   Future<void> signOut() async {

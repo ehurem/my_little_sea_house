@@ -15,18 +15,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LoginRequestEvent>((event, emit) async {
       emit(LoginLoadingState());
       try {
-        final userCredential = await _userRepository.signInWithCredentials(
+        final user = await _userRepository.signInWithCredentials(
           email: event.email,
           password: event.password,
         );
 
-        if (userCredential.user == null) {
+        if (user == null) {
           emit(LoginFailureState.error('Login: User yielded is null.'));
         } else {
-          final User user = User(
-            displayName: userCredential.user!.displayName.toString(),
-            id: userCredential.user!.uid,
-          );
           emit(
             LoginSuccessState(
               user,
