@@ -4,8 +4,6 @@ import 'package:my_little_sea_house/bloc/login/login_state.dart';
 import 'package:my_little_sea_house/exceptions/form_exceptions.dart';
 import 'package:my_little_sea_house/repository/user_repository.dart';
 
-import '../../models/user_model.dart';
-
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   late UserRepository _userRepository;
 
