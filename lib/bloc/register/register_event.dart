@@ -16,3 +16,11 @@ class RegisterRequestEvent extends RegisterEvent {
   @override
   List<Object?> get props => [email, password];
 }
+
+class RegisterRestartEvent extends RegisterEvent {
+  @override
+  String toString() => 'Reset Register';
+
+  @override
+  List<Object?> get props => [];
+}

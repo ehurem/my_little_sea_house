@@ -40,5 +40,9 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         ));
       }
     });
+
+    on<RegisterRestartEvent>((event, emit) async {
+      emit(RegisterInitialState());
+    });
   }
 }

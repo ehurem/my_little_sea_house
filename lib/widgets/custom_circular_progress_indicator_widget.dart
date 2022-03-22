@@ -8,9 +8,26 @@ class CustomCircularProgressIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Stack(alignment: Alignment.center, children: [
-        Lottie.asset('assets/lottie/beach.json', fit: BoxFit.contain)
-      ]),
+      child: Column(
+        children: [
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Lottie.asset('assets/lottie/beach.json', fit: BoxFit.contain)
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Učitavamo...",
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey.shade900,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -1,7 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:loader_overlay/loader_overlay.dart';
 import 'package:lottie/lottie.dart';
 import 'package:my_little_sea_house/bloc/authentication/authentication_bloc.dart';
 import 'package:my_little_sea_house/bloc/authentication/authentication_event.dart';
@@ -10,6 +9,7 @@ import 'package:my_little_sea_house/bloc/login/login_bloc.dart';
 import 'package:my_little_sea_house/bloc/login/login_event.dart';
 import 'package:my_little_sea_house/bloc/login/login_state.dart';
 import 'package:my_little_sea_house/bloc/navigation/navigation_cubit.dart';
+import 'package:my_little_sea_house/bloc/register/register_bloc.dart';
 import 'package:my_little_sea_house/screens/home/home_screen.dart';
 import 'package:my_little_sea_house/screens/login/login_screen.dart';
 import 'package:my_little_sea_house/screens/register/register_screen.dart';
@@ -38,6 +38,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final registerBloc = BlocProvider.of<RegisterBloc>(context);
+
     bool invalidCredentials = false;
     Size size = MediaQuery.of(context).size;
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
@@ -94,7 +96,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                   size.height * 0.3,
                                   size.width * 0.2,
                                   size.height * 0.3),
-                              child: CustomCircularProgressIndicator())
+                              child: const CustomCircularProgressIndicator())
                           : (state is LoginSuccessState)
                               ? HomeScreen()
                               : Column(
@@ -271,7 +273,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                   ? Colors.grey.shade300
                                                   : Colors.grey.shade700,
                                             ),
-                                            hintText: 'Password',
+                                            hintText: 'Lozinka',
                                             fillColor: Colors.black,
                                             contentPadding:
                                                 const EdgeInsets.symmetric(
@@ -370,43 +372,54 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                       height: 20,
                                     ),
                                     FadeInUp(
-                                        duration:
-                                            const Duration(milliseconds: 1400),
-                                        delay:
-                                            const Duration(milliseconds: 300),
-                                        child: Row(
-                                          children: [
-                                            const Spacer(),
-                                            Text("Nemate nalog još uvijek?",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    color:
-                                                        Colors.grey.shade500)),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 6),
-                                              child: GestureDetector(
-                                                onTap: () => Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        RegisterScreen(),
-                                                  ),
-                                                ),
-                                                child: Text(
-                                                  "Registrujte se",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      color:
-                                                          Colors.grey.shade900,
-                                                      fontWeight:
-                                                          FontWeight.w700),
+                                      duration:
+                                          const Duration(milliseconds: 1400),
+                                      delay: const Duration(milliseconds: 300),
+                                      child: Row(
+                                        children: [
+                                          const Spacer(),
+                                          Text("Nemate nalog još uvijek?",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.grey.shade500)),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 6),
+                                            child: GestureDetector(
+                                              onTap: () =>
+
+                                                  // Navigator.push(
+                                                  //   context,
+                                                  //   MaterialPageRoute(
+                                                  //     builder: (context) =>
+                                                  //         RegisterScreen(),
+                                                  //   ),
+                                                  // )
+                                                  Navigator.of(context).push(
+                                                MaterialPageRoute<
+                                                    RegisterScreen>(
+                                                  builder: (context) {
+                                                    return BlocProvider.value(
+                                                      value: registerBloc,
+                                                      child: RegisterScreen(),
+                                                    );
+                                                  },
                                                 ),
                                               ),
+                                              child: Text(
+                                                "Registrujte se",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    color: Colors.grey.shade900,
+                                                    fontWeight:
+                                                        FontWeight.w700),
+                                              ),
                                             ),
-                                            const Spacer(),
-                                          ],
-                                        )),
+                                          ),
+                                          const Spacer(),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
                     ),

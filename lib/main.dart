@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_little_sea_house/bloc/authentication/authentication_bloc.dart';
 import 'package:my_little_sea_house/bloc/authentication/authentication_event.dart';
 import 'package:my_little_sea_house/bloc/authentication/authentication_state.dart';
+import 'package:my_little_sea_house/bloc/register/register_bloc.dart';
 import 'package:my_little_sea_house/screens/welcome/welcome_screen.dart';
 import 'package:my_little_sea_house/widgets/custom_circular_progress_indicator_widget.dart';
 
@@ -50,32 +51,35 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => _authenticationBloc..add(AppStartedEvent()),
-      child: MaterialApp(
-        title: 'Pet Home',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-            // colorScheme: const ColorScheme.dark(),
-            // primarySwatch: Colors.blue,
-            ),
-        home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-          builder: (context, state) {
-            if (state is UninitializedState) {
-              return const CustomCircularProgressIndicator();
-            } else {
-              return const WelcomeScreen();
-            }
-          },
+      child: BlocProvider(
+        create: (context) => RegisterBloc(),
+        child: MaterialApp(
+          title: 'Pet Home',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+              // colorScheme: const ColorScheme.dark(),
+              // primarySwatch: Colors.blue,
+              ),
+          home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+            builder: (context, state) {
+              if (state is UninitializedState) {
+                return const CustomCircularProgressIndicator();
+              } else {
+                return const WelcomeScreen();
+              }
+            },
+          ),
+          supportedLocales: const [
+            Locale('en', 'US'),
+            Locale('pt', ''),
+            Locale('es', ''),
+            Locale('fa', ''),
+            Locale('fr', ''),
+            Locale('ja', ''),
+            Locale('sk', ''),
+            Locale('pl', ''),
+          ],
         ),
-        supportedLocales: const [
-          Locale('en', 'US'),
-          Locale('pt', ''),
-          Locale('es', ''),
-          Locale('fa', ''),
-          Locale('fr', ''),
-          Locale('ja', ''),
-          Locale('sk', ''),
-          Locale('pl', ''),
-        ],
       ),
     );
   }
