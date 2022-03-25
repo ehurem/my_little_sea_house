@@ -15,7 +15,7 @@ import 'package:my_little_sea_house/exceptions/form_exceptions.dart';
 import 'package:my_little_sea_house/screens/home/home_screen.dart';
 import 'package:my_little_sea_house/widgets/custom_circular_progress_indicator_widget.dart';
 import 'package:my_little_sea_house/widgets/form_error_widget.dart';
-import 'package:my_little_sea_house/widgets/sucess_dialog_widget.dart';
+import 'package:my_little_sea_house/widgets/sucess_animation_widget.dart';
 import 'dart:io';
 
 // class RegisterScreen extends StatelessWidget {
@@ -320,7 +320,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 size.height * 0.3),
                             child: const CustomCircularProgressIndicator())
                         : (state is RegisterSuccessState)
-                            ? HomeScreen()
+                            ? const SuccessAnimation()
                             : Column(
                                 children: [
                                   const SizedBox(height: 20),
@@ -704,35 +704,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     height: 20,
                                   ),
                                   FadeInUp(
-                                      duration:
-                                          const Duration(milliseconds: 1400),
-                                      delay: const Duration(milliseconds: 300),
-                                      child: Row(
-                                        children: [
-                                          const Spacer(),
-                                          Text("Imate nalog?",
+                                    duration:
+                                        const Duration(milliseconds: 1400),
+                                    delay: const Duration(milliseconds: 300),
+                                    child: Row(
+                                      children: [
+                                        const Spacer(),
+                                        Text("Imate nalog?",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.grey.shade500)),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 6),
+                                          child: GestureDetector(
+                                            onTap: () => Navigator.pop(context),
+                                            child: Text(
+                                              "Prijavite se",
                                               style: TextStyle(
                                                   fontSize: 15,
-                                                  color: Colors.grey.shade500)),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(left: 6),
-                                            child: GestureDetector(
-                                              onTap: () =>
-                                                  Navigator.pop(context),
-                                              child: Text(
-                                                "Prijavite se",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    color: Colors.grey.shade900,
-                                                    fontWeight:
-                                                        FontWeight.w700),
-                                              ),
+                                                  color: Colors.grey.shade900,
+                                                  fontWeight: FontWeight.w700),
                                             ),
                                           ),
-                                          const Spacer(),
-                                        ],
-                                      )),
+                                        ),
+                                        const Spacer(),
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               ),
                   ),

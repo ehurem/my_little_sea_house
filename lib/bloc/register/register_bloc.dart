@@ -24,11 +24,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         if (user == null) {
           emit(RegisterErrorState.error('Registration: User yielded is null.'));
         } else {
-          emit(
-            RegisterSuccessState(
-              user,
-            ),
-          );
+          emit(RegisterSuccessState(user));
         }
       } on FormGeneralException catch (e) {
         emit(RegisterErrorState.exception(e));

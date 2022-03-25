@@ -23,14 +23,13 @@ class AuthenticationBloc
         bool isSignedIn = await _userRepository.isSignedIn();
 
         if (isSignedIn) {
-          User? user = await _userRepository.getUser();
-          user_model.User myUser = user_model.User(
-              id: user!.uid,
-              displayName: user.displayName ?? 'No name provided',
-              email: user.email,
-              phone: user.phoneNumber,
-              imageUrl: user.photoURL);
-          emit(AuthAuthenticatedState(user: myUser));
+          user_model.User? myUser = await _userRepository.getUser();
+
+          if (myUser != null) {
+            emit(AuthAuthenticatedState(user: myUser));
+          } else {
+            emit(const AuthenticationFailureState(error: 'User is null'));
+          }
         } else {
           emit(UnauthenticatedState());
         }

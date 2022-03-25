@@ -5,6 +5,7 @@ import 'package:my_little_sea_house/bloc/authentication/authentication_bloc.dart
 import 'package:my_little_sea_house/bloc/authentication/authentication_event.dart';
 import 'package:my_little_sea_house/bloc/authentication/authentication_state.dart';
 import 'package:my_little_sea_house/bloc/register/register_bloc.dart';
+import 'package:my_little_sea_house/screens/home/home_screen.dart';
 import 'package:my_little_sea_house/screens/welcome/welcome_screen.dart';
 import 'package:my_little_sea_house/widgets/custom_circular_progress_indicator_widget.dart';
 
@@ -64,6 +65,8 @@ class _MyAppState extends State<MyApp> {
             builder: (context, state) {
               if (state is UninitializedState) {
                 return const CustomCircularProgressIndicator();
+              } else if (state is AuthAuthenticateEvent) {
+                return HomeScreen();
               } else {
                 return const WelcomeScreen();
               }

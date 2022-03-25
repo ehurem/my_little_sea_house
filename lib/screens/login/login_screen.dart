@@ -12,7 +12,7 @@ import 'package:my_little_sea_house/bloc/login/login_state.dart';
 import 'package:my_little_sea_house/exceptions/form_exceptions.dart';
 import 'package:my_little_sea_house/screens/register/register_screen.dart';
 import 'package:my_little_sea_house/widgets/form_error_widget.dart';
-import 'package:my_little_sea_house/widgets/sucess_dialog_widget.dart';
+import 'package:my_little_sea_house/widgets/sucess_animation_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -35,16 +35,6 @@ class _LoginScreenState extends State<LoginScreen> {
               context.read<AuthenticationBloc>().add(
                     AuthAuthenticateEvent(state.user),
                   );
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return const SuccessDialog(
-                    title: 'Success',
-                    text: 'Your login was successful!',
-                    buttonText: 'Continue',
-                  );
-                },
-              );
             }
           },
           builder: (context, state) {

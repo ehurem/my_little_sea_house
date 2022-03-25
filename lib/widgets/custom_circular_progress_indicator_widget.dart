@@ -17,10 +17,10 @@ class CustomCircularProgressIndicator extends StatelessWidget {
             ],
           ),
           const SizedBox(
-            height: 10,
+            height: 20,
           ),
           Text(
-            "Učitavamo...",
+            "Učitavanje u toku...",
             style: TextStyle(
               fontSize: 16,
               color: Colors.grey.shade900,

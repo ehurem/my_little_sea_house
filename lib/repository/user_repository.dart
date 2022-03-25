@@ -17,6 +17,17 @@ class UserRepository {
         : null;
   }
 
+  user_model.User? _userFromFirebaseUser(User? firebaseUser) {
+    return firebaseUser != null
+        ? user_model.User(
+            id: firebaseUser.uid,
+            displayName: firebaseUser.displayName ?? 'Display name is null.',
+            email: firebaseUser.email,
+            phone: firebaseUser.phoneNumber,
+            imageUrl: firebaseUser.photoURL)
+        : null;
+  }
+
   // Sign in Anonimously
   Future<user_model.User?> signInAnonimously() async {
     try {
@@ -58,7 +69,7 @@ class UserRepository {
     return currentUser != null;
   }
 
-  Future<User?> getUser() async {
-    return _firebaseAuth.currentUser;
+  Future<user_model.User?> getUser() async {
+    return _userFromFirebaseUser(_firebaseAuth.currentUser);
   }
 }
