@@ -4,22 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_little_sea_house/bloc/authentication/authentication_bloc.dart';
 import 'package:my_little_sea_house/bloc/authentication/authentication_event.dart';
 import 'package:my_little_sea_house/bloc/authentication/authentication_state.dart';
+import 'package:my_little_sea_house/bloc/navigation/navigation_cubit.dart';
 import 'package:my_little_sea_house/bloc/register/register_bloc.dart';
-import 'package:my_little_sea_house/screens/home/home_screen.dart';
+import 'package:my_little_sea_house/screens/bottom_app_bar/root_screen.dart';
+import 'package:my_little_sea_house/screens/register/register_screen.dart';
 import 'package:my_little_sea_house/screens/welcome/welcome_screen.dart';
-import 'package:my_little_sea_house/widgets/custom_circular_progress_indicator_widget.dart';
-
-class SimpleBlocObserver extends BlocObserver {
-  @override
-  void onTransition(Bloc bloc, Transition transition) {
-    super.onTransition(bloc, transition);
-    print('onTransition -- bloc: ${bloc.runtimeType}, transition: $transition');
-  }
-}
+import 'package:my_little_sea_house/widgets/custom_loading_bar_widget.dart';
 
 void main() async {
-  BlocObserver observer = SimpleBlocObserver();
-
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
@@ -34,6 +26,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late AuthenticationBloc _authenticationBloc;
+  final _navigationCubit = NavigationCubit();
+  final _registerBloc = RegisterBloc();
 
   @override
   void initState() {
@@ -52,37 +46,44 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => _authenticationBloc..add(AppStartedEvent()),
-      child: BlocProvider(
-        create: (context) => RegisterBloc(),
-        child: MaterialApp(
-          title: 'Pet Home',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-              // colorScheme: const ColorScheme.dark(),
-              // primarySwatch: Colors.blue,
+      child: MaterialApp(
+        title: 'Pet Home',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            // colorScheme: const ColorScheme.dark(),
+            // primarySwatch: Colors.blue,
+            ),
+        routes: {
+          '/register': (context) => BlocProvider.value(
+                value: _registerBloc,
+                child: const RegisterScreen(),
               ),
-          home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-            builder: (context, state) {
-              if (state is UninitializedState) {
-                return const CustomCircularProgressIndicator();
-              } else if (state is AuthAuthenticateEvent) {
-                return HomeScreen();
-              } else {
-                return const WelcomeScreen();
-              }
-            },
-          ),
-          supportedLocales: const [
-            Locale('en', 'US'),
-            Locale('pt', ''),
-            Locale('es', ''),
-            Locale('fa', ''),
-            Locale('fr', ''),
-            Locale('ja', ''),
-            Locale('sk', ''),
-            Locale('pl', ''),
-          ],
+          '/root': (context) => BlocProvider.value(
+                value: _navigationCubit,
+                child: const RootScreen(),
+              ),
+        },
+        home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+          builder: (context, state) {
+            if (state is UninitializedState) {
+              return const CustomLoadingBar();
+            } else if (state is AuthAuthenticateEvent) {
+              return const RootScreen();
+            } else {
+              return const WelcomeScreen();
+            }
+          },
         ),
+        supportedLocales: const [
+          Locale('en', 'US'),
+          Locale('pt', ''),
+          Locale('es', ''),
+          Locale('fa', ''),
+          Locale('fr', ''),
+          Locale('ja', ''),
+          Locale('sk', ''),
+          Locale('pl', ''),
+        ],
       ),
     );
   }

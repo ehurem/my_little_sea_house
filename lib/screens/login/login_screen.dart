@@ -1,8 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:my_little_sea_house/bloc/authentication/authentication_bloc.dart';
 import 'package:my_little_sea_house/bloc/authentication/authentication_event.dart';
 import 'package:my_little_sea_house/bloc/authentication/authentication_state.dart';
@@ -11,7 +9,6 @@ import 'package:my_little_sea_house/bloc/login/login_event.dart';
 import 'package:my_little_sea_house/bloc/login/login_state.dart';
 import 'package:my_little_sea_house/exceptions/form_exceptions.dart';
 import 'package:my_little_sea_house/screens/register/register_screen.dart';
-import 'package:my_little_sea_house/widgets/form_error_widget.dart';
 import 'package:my_little_sea_house/widgets/sucess_animation_widget.dart';
 
 class LoginScreen extends StatefulWidget {

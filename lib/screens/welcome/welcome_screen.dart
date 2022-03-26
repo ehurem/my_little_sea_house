@@ -8,13 +8,8 @@ import 'package:my_little_sea_house/bloc/authentication/authentication_state.dar
 import 'package:my_little_sea_house/bloc/login/login_bloc.dart';
 import 'package:my_little_sea_house/bloc/login/login_event.dart';
 import 'package:my_little_sea_house/bloc/login/login_state.dart';
-import 'package:my_little_sea_house/bloc/navigation/navigation_cubit.dart';
-import 'package:my_little_sea_house/bloc/register/register_bloc.dart';
 import 'package:my_little_sea_house/screens/home/home_screen.dart';
-import 'package:my_little_sea_house/screens/login/login_screen.dart';
-import 'package:my_little_sea_house/screens/register/register_screen.dart';
-import 'package:my_little_sea_house/screens/root/root_screen.dart';
-import 'package:my_little_sea_house/widgets/custom_circular_progress_indicator_widget.dart';
+import 'package:my_little_sea_house/widgets/custom_loading_bar_widget.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -38,10 +33,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final registerBloc = BlocProvider.of<RegisterBloc>(context);
-
     bool invalidCredentials = false;
     Size size = MediaQuery.of(context).size;
+
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
         return BlocProvider(
@@ -58,33 +52,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               return SafeArea(
                 child: Scaffold(
                   resizeToAvoidBottomInset: false,
-                  // appBar: AppBar(
-                  //   actions: [
-                  //     (state is AuthAuthenticatedState)
-                  //         ? IconButton(
-                  //             onPressed: () {
-                  //               context
-                  //                   .read<AuthenticationBloc>()
-                  //                   .add(AuthLogoutEvent());
-                  //             },
-                  //             icon: const Icon(
-                  //               Icons.logout,
-                  //             ),
-                  //           )
-                  //         : IconButton(
-                  //             onPressed: () {
-                  //               Navigator.push(
-                  //                 context,
-                  //                 MaterialPageRoute(
-                  //                     builder: (context) => LoginScreen()),
-                  //               );
-                  //             },
-                  //             icon: const Icon(
-                  //               Icons.login,
-                  //             ),
-                  //           ),
-                  //   ],
-                  // ),
                   body: SingleChildScrollView(
                     reverse: true,
                     child: Padding(
@@ -92,11 +59,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       child: (state is LoginLoadingState)
                           ? Padding(
                               padding: EdgeInsets.fromLTRB(
-                                  size.width * 0.2,
-                                  size.height * 0.3,
-                                  size.width * 0.2,
-                                  size.height * 0.3),
-                              child: const CustomCircularProgressIndicator())
+                                  size.width * 0.1,
+                                  size.height * 0.1,
+                                  size.width * 0.1,
+                                  size.height * 0.1),
+                              child: const CustomLoadingBar())
                           : (state is LoginSuccessState)
                               ? HomeScreen()
                               : Column(
@@ -378,34 +345,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                       child: Row(
                                         children: [
                                           const Spacer(),
-                                          Text("Nemate nalog još uvijek?",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  color: Colors.grey.shade500)),
+                                          Text(
+                                            "Nemate nalog još uvijek?",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.grey.shade500),
+                                          ),
                                           Padding(
                                             padding:
                                                 const EdgeInsets.only(left: 6),
                                             child: GestureDetector(
-                                              onTap: () =>
-
-                                                  // Navigator.push(
-                                                  //   context,
-                                                  //   MaterialPageRoute(
-                                                  //     builder: (context) =>
-                                                  //         RegisterScreen(),
-                                                  //   ),
-                                                  // )
-                                                  Navigator.of(context).push(
-                                                MaterialPageRoute<
-                                                    RegisterScreen>(
-                                                  builder: (context) {
-                                                    return BlocProvider.value(
-                                                      value: registerBloc,
-                                                      child: RegisterScreen(),
-                                                    );
-                                                  },
-                                                ),
-                                              ),
+                                              onTap: () => Navigator.of(context)
+                                                  .pushNamed('/register'),
                                               child: Text(
                                                 "Registrujte se",
                                                 style: TextStyle(
