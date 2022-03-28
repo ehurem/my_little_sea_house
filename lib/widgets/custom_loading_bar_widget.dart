@@ -61,7 +61,7 @@ class _CustomLoadingBarState extends State<CustomLoadingBar> {
         mainAxisSize: MainAxisSize.max,
         children: [
           Text(
-            "Nestandardni loading...",
+            "Pripremamo sadržaj...",
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w400,

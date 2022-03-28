@@ -24,15 +24,13 @@ class LoginSuccessState extends LoginState {
 
 // ignore: must_be_immutable
 class LoginFailureState extends LoginState {
-  Exception? exception;
   String? error;
 
-  LoginFailureState.exception(this.exception);
-  LoginFailureState.error(this.error);
+  LoginFailureState(this.error);
 
   @override
-  List<Object?> get props => [exception, error];
+  List<Object?> get props => [error];
 
   @override
-  String toString() => 'LoginFailure { exception: $exception, error: $error }';
+  String toString() => 'LoginFailure { error: $error }';
 }

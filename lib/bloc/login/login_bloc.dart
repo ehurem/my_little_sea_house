@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_little_sea_house/bloc/login/login_event.dart';
 import 'package:my_little_sea_house/bloc/login/login_state.dart';
 import 'package:my_little_sea_house/exceptions/form_exceptions.dart';
@@ -19,7 +20,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         );
 
         if (user == null) {
-          emit(LoginFailureState.error('Login: User yielded is null.'));
+          emit(LoginFailureState('Login: User yielded is null.'));
         } else {
           emit(
             LoginSuccessState(
@@ -27,14 +28,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             ),
           );
         }
-      } on FormGeneralException catch (e) {
-        emit(LoginFailureState.exception(e));
-      } on FormFieldsException catch (e) {
-        emit(LoginFailureState.exception(e));
-      } catch (e) {
-        emit(LoginFailureState.exception(
-          FormGeneralException(message: 'Unidentified error'),
-        ));
+      } on FirebaseAuthException catch (e) {
+        emit(LoginFailureState(e.message.toString()));
+      } on Exception catch (e) {
+        emit(LoginFailureState('Login failed'));
       }
     });
   }

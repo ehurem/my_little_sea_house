@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:my_little_sea_house/exceptions/form_exceptions.dart';
@@ -15,6 +17,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
     on<RegisterRequestEvent>((event, emit) async {
       emit(RegisterLoadingState());
+
       try {
         final user = await _userRepository.signUp(
           email: event.email,

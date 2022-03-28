@@ -38,14 +38,23 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void dispose() {
+    _authenticationBloc.add(AuthLogoutEvent());
     _authenticationBloc.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _authenticationBloc..add(AppStartedEvent()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthenticationBloc>(
+          create: (BuildContext context) =>
+              _authenticationBloc..add(AppStartedEvent()),
+        ),
+        BlocProvider<NavigationCubit>(
+          create: (BuildContext context) => NavigationCubit(),
+        ),
+      ],
       child: MaterialApp(
         title: 'Pet Home',
         debugShowCheckedModeBanner: false,
@@ -67,9 +76,11 @@ class _MyAppState extends State<MyApp> {
           builder: (context, state) {
             if (state is UninitializedState) {
               return const CustomLoadingBar();
-            } else if (state is AuthAuthenticateEvent) {
-              return const RootScreen();
-            } else {
+            }
+            // else if (state is AuthAuthenticatedState) {
+            //   return const RootScreen();
+            // }
+            else {
               return const WelcomeScreen();
             }
           },
