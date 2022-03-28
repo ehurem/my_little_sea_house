@@ -43,6 +43,15 @@ class _MyAppState extends State<MyApp> {
     super.dispose();
   }
 
+  // COLOR SCHEME:
+  // #CACACA
+  // #FDDD9F    - yellow
+  // #5FB4B6    - dark green
+  // #FFFFFF
+  // #F7DCAB    - light yellow
+  // #A5DDE2    - light green
+  // Color.fromARGB(255, 32, 128, 129)
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(

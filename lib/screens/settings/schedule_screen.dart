@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-class SettingsScreen extends StatefulWidget {
+class ScheduleScreen extends StatefulWidget {
   @override
-  _SettingsScreenState createState() => _SettingsScreenState();
+  _ScheduleScreenState createState() => _ScheduleScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _ScheduleScreenState extends State<ScheduleScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.redAccent,
       child: Center(
         child: Text(
-          'This is the settings screen.',
+          'This is the schedule screen.',
           style: TextStyle(color: Colors.white, fontSize: 18),
         ),
       ),

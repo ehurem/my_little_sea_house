@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_little_sea_house/bloc/navigation/nav_bar_items.dart';
 import 'package:my_little_sea_house/bloc/navigation/navigation_cubit.dart';
+import 'package:my_little_sea_house/screens/bills/bills_screen.dart';
 import 'package:my_little_sea_house/screens/home/home_screen.dart';
 import 'package:my_little_sea_house/screens/profile/profile_screen.dart';
-import 'package:my_little_sea_house/screens/settings/settings_screen.dart';
+import 'package:my_little_sea_house/screens/settings/schedule_screen.dart';
 
 class RootScreen extends StatefulWidget {
   const RootScreen({Key? key}) : super(key: key);
@@ -22,66 +24,93 @@ class _RootScreenState extends State<RootScreen> {
     return WillPopScope(
       onWillPop: () async => false,
       child: SafeArea(
-        child: SizedBox(
-          height: size.height,
-          width: size.height,
-          child: Scaffold(
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              title: Text('Flutter Bottom Navbar Tutorial w/ Bloc'),
-            ),
-            bottomNavigationBar: BlocBuilder<NavigationCubit, NavigationState>(
-              builder: (context, state) {
-                return BottomNavigationBar(
-                  currentIndex: state.index,
-                  showUnselectedLabels: false,
-                  items: [
-                    BottomNavigationBarItem(
-                      icon: Icon(
-                        Icons.home,
-                      ),
-                      label: 'Home',
+        child: Scaffold(
+          bottomNavigationBar: BlocBuilder<NavigationCubit, NavigationState>(
+            builder: (context, state) {
+              return BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
+                showSelectedLabels: false,
+                showUnselectedLabels: false,
+                selectedItemColor: const Color.fromARGB(255, 95, 180, 182),
+                unselectedItemColor: Colors.grey.shade400,
+                currentIndex: state.index,
+                items: [
+                  BottomNavigationBarItem(
+                    activeIcon: Icon(
+                      Icons.home,
+                      size: size.width * 0.07,
                     ),
-                    BottomNavigationBarItem(
-                      icon: Icon(
-                        Icons.settings,
-                      ),
-                      label: 'Settings',
+                    icon: Icon(
+                      Icons.home_outlined,
+                      size: size.width * 0.07,
                     ),
-                    BottomNavigationBarItem(
-                      icon: Icon(
-                        Icons.person,
-                      ),
-                      label: 'Profile',
+                    label: '',
+                  ),
+                  BottomNavigationBarItem(
+                    activeIcon: Icon(
+                      Icons.calendar_month,
+                      size: size.width * 0.06,
                     ),
-                  ],
-                  onTap: (index) {
-                    if (index == 0) {
-                      BlocProvider.of<NavigationCubit>(context)
-                          .getNavBarItem(NavbarItem.home);
-                    } else if (index == 1) {
-                      BlocProvider.of<NavigationCubit>(context)
-                          .getNavBarItem(NavbarItem.settings);
-                    } else if (index == 2) {
-                      BlocProvider.of<NavigationCubit>(context)
-                          .getNavBarItem(NavbarItem.profile);
-                    }
-                  },
-                );
-              },
-            ),
-            body: BlocBuilder<NavigationCubit, NavigationState>(
-                builder: (context, state) {
-              if (state.navbarItem == NavbarItem.home) {
-                return HomeScreen();
-              } else if (state.navbarItem == NavbarItem.settings) {
-                return SettingsScreen();
-              } else if (state.navbarItem == NavbarItem.profile) {
-                return ProfileScreen();
-              }
-              return Container();
-            }),
+                    icon: Icon(
+                      Icons.calendar_month_outlined,
+                      size: size.width * 0.06,
+                    ),
+                    label: '',
+                  ),
+                  BottomNavigationBarItem(
+                    activeIcon: Icon(
+                      FontAwesomeIcons.bolt,
+                      size: size.width * 0.06,
+                    ),
+                    icon: Icon(
+                      FontAwesomeIcons.boltLightning,
+                      size: size.width * 0.06,
+                    ),
+                    label: '',
+                  ),
+                  BottomNavigationBarItem(
+                    activeIcon: Icon(
+                      FontAwesomeIcons.solidCircleUser,
+                      size: size.width * 0.06,
+                    ),
+                    icon: Icon(
+                      FontAwesomeIcons.circleUser,
+                      size: size.width * 0.06,
+                    ),
+                    label: '',
+                  ),
+                ],
+                onTap: (index) {
+                  if (index == 0) {
+                    BlocProvider.of<NavigationCubit>(context)
+                        .getNavBarItem(NavbarItem.home);
+                  } else if (index == 1) {
+                    BlocProvider.of<NavigationCubit>(context)
+                        .getNavBarItem(NavbarItem.schedule);
+                  } else if (index == 2) {
+                    BlocProvider.of<NavigationCubit>(context)
+                        .getNavBarItem(NavbarItem.bills);
+                  } else if (index == 3) {
+                    BlocProvider.of<NavigationCubit>(context)
+                        .getNavBarItem(NavbarItem.profile);
+                  }
+                },
+              );
+            },
           ),
+          body: BlocBuilder<NavigationCubit, NavigationState>(
+              builder: (context, state) {
+            if (state.navbarItem == NavbarItem.home) {
+              return HomeScreen();
+            } else if (state.navbarItem == NavbarItem.schedule) {
+              return ScheduleScreen();
+            } else if (state.navbarItem == NavbarItem.bills) {
+              return BillsScreen();
+            } else if (state.navbarItem == NavbarItem.profile) {
+              return ProfileScreen();
+            }
+            return Container();
+          }),
         ),
       ),
     );

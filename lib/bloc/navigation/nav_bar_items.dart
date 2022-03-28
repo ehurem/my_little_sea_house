@@ -1,4 +1,4 @@
-enum NavbarItem { home, settings, profile }
+enum NavbarItem { home, schedule, bills, profile }
 
 // https://pub.dev/packages/calendar_view
 

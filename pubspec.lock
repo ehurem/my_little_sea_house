@@ -99,6 +99,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+  day_night_switcher:
+    dependency: "direct main"
+    description:
+      name: day_night_switcher
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0+1"
   equatable:
     dependency: "direct main"
     description:
@@ -196,6 +203,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  font_awesome_flutter:
+    dependency: "direct main"
+    description:
+      name: font_awesome_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "10.1.0"
   form_builder_validators:
     dependency: "direct main"
     description:
@@ -341,6 +355,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.8"
+  toggle_switch:
+    dependency: "direct main"
+    description:
+      name: toggle_switch
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.4.0"
   typed_data:
     dependency: transitive
     description:
